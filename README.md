@@ -47,7 +47,10 @@ custom_components/sutro/sensor.py
 
 ## Configuration is done in the UI
 
-<!---->
+The only configuration parameter required is the Sutro API token. This can be discovered by observing the network calls made by the Sutro App. An easy option is to use Charles:
+https://www.charlesproxy.com/documentation/faqs/using-charles-from-an-iphone/
+
+And then look for the calls to https://api.mysutro.com/graphql. The token will be in the Authorization header of the outgoing requests.
 
 ## Contributions are welcome!
 
