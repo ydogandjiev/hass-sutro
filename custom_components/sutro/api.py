@@ -13,9 +13,7 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 class SutroApiClient:
-    def __init__(
-        self, token: str, session: aiohttp.ClientSession
-    ) -> None:
+    def __init__(self, token: str, session: aiohttp.ClientSession) -> None:
         """Sample API Client."""
         self._token = token
         self._session = session
@@ -45,13 +43,14 @@ class SutroApiClient:
         """
         headers = {
             "Content-type": "application/json; charset=UTF-8",
-            "Authorization": f"Bearer {self._token}"
+            "Authorization": f"Bearer {self._token}",
         }
         url = "https://api.mysutro.com/graphql"
-        return await self.api_wrapper("post", url, query, headers)
+        response = await self.api_wrapper("post", url, query, headers)
+        return response["data"]
 
     async def api_wrapper(
-        self, method: str, url: str, data: dict = {}, headers: dict = {}
+        self, method: str, url: str, data: dict, headers: dict
     ) -> dict:
         """Get information from the API."""
         try:

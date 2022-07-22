@@ -5,25 +5,19 @@
         "title": "Sutro Smart Pool Monitor Support",
         "description": "If you need help with the configuration have a look here: https://github.com/ydogandjiev/hass-sutro",
         "data": {
-          "username": "Username",
-          "password": "Password"
+          "username": "Token"
         }
       }
     },
     "error": {
-      "auth": "Username/Password is wrong."
-    },
-    "abort": {
-      "single_instance_allowed": "Only a single instance is allowed."
+      "auth": "Token is invalid or expired."
     }
   },
   "options": {
     "step": {
       "user": {
         "data": {
-          "binary_sensor": "Binary sensor enabled",
-          "sensor": "Sensor enabled",
-          "switch": "Switch enabled"
+          "sensor": "Sensor enabled"
         }
       }
     }

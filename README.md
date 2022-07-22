@@ -37,20 +37,12 @@ Using your HA configuration directory (folder) as a starting point you should no
 
 ```text
 custom_components/sutro/translations/en.json
-custom_components/sutro/translations/fr.json
-custom_components/sutro/translations/nb.json
-custom_components/sutro/translations/sensor.en.json
-custom_components/sutro/translations/sensor.fr.json
-custom_components/sutro/translations/sensor.nb.json
-custom_components/sutro/translations/sensor.nb.json
 custom_components/sutro/__init__.py
 custom_components/sutro/api.py
-custom_components/sutro/binary_sensor.py
 custom_components/sutro/config_flow.py
 custom_components/sutro/const.py
 custom_components/sutro/manifest.json
 custom_components/sutro/sensor.py
-custom_components/sutro/switch.py
 ```
 
 ## Configuration is done in the UI
