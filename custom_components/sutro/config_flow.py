@@ -2,15 +2,17 @@
 from __future__ import annotations
 
 import voluptuous as vol
-
 from homeassistant import config_entries
-from homeassistant.config_entries import ConfigEntry, OptionsFlow
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.config_entries import OptionsFlow
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 
 from .api import SutroApiClient
-from .const import CONF_TOKEN, DOMAIN, PLATFORMS
+from .const import CONF_TOKEN
+from .const import DOMAIN
+from .const import PLATFORMS
 
 
 class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):

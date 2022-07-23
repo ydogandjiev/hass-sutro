@@ -1,4 +1,4 @@
-# Sutro Smart Pool Monitor Support
+# Sutro
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
@@ -17,9 +17,9 @@ This component integrates Home Assistant with Sutro (https://mysutro.com/), a de
 
 **This component will set up the following platforms.**
 
-| Platform        | Description                                          |
-| --------------- | ---------------------------------------------------- |
-| `sensor`        | Show info from Sutro Smart Pool Monitor Support API. |
+| Platform | Description                   |
+| -------- | ----------------------------- |
+| `sensor` | Show measurements from Sutro. |
 
 ![example][exampleimg]
 
@@ -31,7 +31,7 @@ This component integrates Home Assistant with Sutro (https://mysutro.com/), a de
 4. Download _all_ the files from the `custom_components/sutro/` directory (folder) in this repository.
 5. Place the files you downloaded in the new directory (folder) you created.
 6. Restart Home Assistant
-7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Sutro Smart Pool Monitor Support"
+7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Sutro"
 
 Using your HA configuration directory (folder) as a starting point you should now also have this:
 

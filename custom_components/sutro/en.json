@@ -5,7 +5,7 @@
         "title": "Sutro",
         "description": "If you need help with the configuration have a look here: https://github.com/ydogandjiev/hass-sutro",
         "data": {
-          "username": "Token"
+          "token": "Token"
         }
       }
     },
