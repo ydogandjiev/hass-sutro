@@ -1,13 +1,16 @@
-"""Adds config flow for Sutro Smart Pool Monitor Support."""
+"""Adds config flow for Sutro."""
+from __future__ import annotations
+
 import voluptuous as vol
+
 from homeassistant import config_entries
+from homeassistant.config_entries import ConfigEntry, OptionsFlow
 from homeassistant.core import callback
+from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 
 from .api import SutroApiClient
-from .const import CONF_TOKEN
-from .const import DOMAIN
-from .const import PLATFORMS
+from .const import CONF_TOKEN, DOMAIN, PLATFORMS
 
 
 class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
@@ -20,7 +23,7 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Initialize."""
         self._errors = {}
 
-    async def async_step_user(self, user_input=None):
+    async def async_step_user(self, user_input=None) -> FlowResult:
         """Handle a flow initialized by the user."""
         self._errors = {}
 
@@ -30,16 +33,16 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 return self.async_create_entry(
                     title=f"{data['me']['firstName']}'s Pool/Spa", data=user_input
                 )
-            else:
-                self._errors["base"] = "auth"
 
+            self._errors["base"] = "auth"
             return await self._show_config_form(user_input)
 
         return await self._show_config_form(user_input)
 
     @staticmethod
     @callback
-    def async_get_options_flow(config_entry):
+    def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
+        """Get options flow for configuring Sutro."""
         return SutroOptionsFlowHandler(config_entry)
 
     async def _show_config_form(self, user_input):  # pylint: disable=unused-argument
@@ -50,7 +53,7 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             errors=self._errors,
         )
 
-    async def _test_credentials(self, token) -> dict:
+    async def _test_credentials(self, token) -> dict | None:
         """Return true if credentials is valid."""
         try:
             session = async_create_clientsession(self.hass)
@@ -58,7 +61,7 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             return await client.async_get_data()
         except Exception:  # pylint: disable=broad-except
             pass
-        return False
+        return None
 
 
 class SutroOptionsFlowHandler(config_entries.OptionsFlow):
@@ -69,11 +72,13 @@ class SutroOptionsFlowHandler(config_entries.OptionsFlow):
         self.config_entry = config_entry
         self.options = dict(config_entry.options)
 
-    async def async_step_init(self, user_input=None):  # pylint: disable=unused-argument
+    async def async_step_init(
+        self, user_input=None
+    ) -> FlowResult:  # pylint: disable=unused-argument
         """Manage the options."""
         return await self.async_step_user()
 
-    async def async_step_user(self, user_input=None):
+    async def async_step_user(self, user_input=None) -> FlowResult:
         """Handle a flow initialized by the user."""
         if user_input is not None:
             self.options.update(user_input)

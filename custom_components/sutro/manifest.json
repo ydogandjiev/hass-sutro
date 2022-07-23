@@ -1,10 +1,11 @@
 {
   "domain": "sutro",
-  "name": "Sutro Smart Pool Monitor Support",
+  "name": "Sutro",
   "documentation": "https://github.com/ydogandjiev/hass-sutro",
   "issue_tracker": "https://github.com/ydogandjiev/hass-sutro/issues",
   "dependencies": [],
   "config_flow": true,
   "codeowners": ["@ydogandjiev"],
-  "requirements": []
+  "requirements": [],
+  "iot_class": "cloud_polling"
 }

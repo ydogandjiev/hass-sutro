@@ -1,6 +1,6 @@
-"""Constants for Sutro Smart Pool Monitor Support."""
+"""Constants for Sutro."""
 # Base component constants
-NAME = "Sutro Smart Pool Monitor Support"
+NAME = "Sutro"
 DOMAIN = "sutro"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
@@ -9,19 +9,18 @@ ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
 ISSUE_URL = "https://github.com/ydogandjiev/hass-sutro/issues"
 
 # Icons
-ICON = "mdi:format-quote-close"
+ICON_ACIDITY = "mdi:ph"
+ICON_ALKALINITY = "mdi:test-tube"
+ICON_CHLORINE = "mdi:water-percent"
+ICON_TEMPERATURE = "mdi:thermometer"
+ICON_BATTERY = "mdi:battery"
 
 # Platforms
 SENSOR = "sensor"
 PLATFORMS = [SENSOR]
 
 # Configuration and options
-CONF_ENABLED = "enabled"
 CONF_TOKEN = "token"
-
-# Defaults
-DEFAULT_NAME = DOMAIN
-
 
 STARTUP_MESSAGE = f"""
 -------------------------------------------------------------------
