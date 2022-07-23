@@ -1,4 +1,4 @@
-# Sutro Smart Pool Monitor Support
+# Sutro
 
 [![GitHub Release][releases-shield]][releases]
 [![GitHub Activity][commits-shield]][commits]
@@ -17,9 +17,9 @@ This component integrates Home Assistant with Sutro (https://mysutro.com/), a de
 
 **This component will set up the following platforms.**
 
-| Platform        | Description                                          |
-| --------------- | ---------------------------------------------------- |
-| `sensor`        | Show info from Sutro Smart Pool Monitor Support API. |
+| Platform | Description                   |
+| -------- | ----------------------------- |
+| `sensor` | Show measurements from Sutro. |
 
 ![example][exampleimg]
 
@@ -31,31 +31,26 @@ This component integrates Home Assistant with Sutro (https://mysutro.com/), a de
 4. Download _all_ the files from the `custom_components/sutro/` directory (folder) in this repository.
 5. Place the files you downloaded in the new directory (folder) you created.
 6. Restart Home Assistant
-7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Sutro Smart Pool Monitor Support"
+7. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Sutro"
 
 Using your HA configuration directory (folder) as a starting point you should now also have this:
 
 ```text
 custom_components/sutro/translations/en.json
-custom_components/sutro/translations/fr.json
-custom_components/sutro/translations/nb.json
-custom_components/sutro/translations/sensor.en.json
-custom_components/sutro/translations/sensor.fr.json
-custom_components/sutro/translations/sensor.nb.json
-custom_components/sutro/translations/sensor.nb.json
 custom_components/sutro/__init__.py
 custom_components/sutro/api.py
-custom_components/sutro/binary_sensor.py
 custom_components/sutro/config_flow.py
 custom_components/sutro/const.py
 custom_components/sutro/manifest.json
 custom_components/sutro/sensor.py
-custom_components/sutro/switch.py
 ```
 
 ## Configuration is done in the UI
 
-<!---->
+The only configuration parameter required is the Sutro API token. This can be discovered by observing the network calls made by the Sutro App. An easy option is to use Charles:
+https://www.charlesproxy.com/documentation/faqs/using-charles-from-an-iphone/
+
+And then look for the calls to https://api.mysutro.com/graphql. The token will be in the Authorization header of the outgoing requests.
 
 ## Contributions are welcome!
 

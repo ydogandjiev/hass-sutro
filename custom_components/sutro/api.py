@@ -1,7 +1,10 @@
-"""Sample API Client."""
+"""Sutro API Client."""
+from __future__ import annotations
+
 import asyncio
 import logging
 import socket
+from typing import Any
 
 import aiohttp
 import async_timeout
@@ -13,14 +16,14 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 class SutroApiClient:
-    def __init__(
-        self, token: str, session: aiohttp.ClientSession
-    ) -> None:
+    """Sutro API Client library."""
+
+    def __init__(self, token: str, session: aiohttp.ClientSession) -> None:
         """Sample API Client."""
         self._token = token
         self._session = session
 
-    async def async_get_data(self) -> dict:
+    async def async_get_data(self) -> dict | None:
         """Get data from the API."""
         query = """
         {
@@ -44,30 +47,33 @@ class SutroApiClient:
         }
         """
         headers = {
-            "Content-type": "application/json; charset=UTF-8",
-            "Authorization": f"Bearer {self._token}"
+            "Authorization": f"Bearer {self._token}",
         }
         url = "https://api.mysutro.com/graphql"
-        return await self.api_wrapper("post", url, query, headers)
+        response = await self.api_wrapper("post", url, query, headers)
+        if response:
+            return response["data"]
+        return None
 
     async def api_wrapper(
-        self, method: str, url: str, data: dict = {}, headers: dict = {}
-    ) -> dict:
+        self, method: str, url: str, data: Any, headers: dict
+    ) -> dict | None:
         """Get information from the API."""
         try:
-            async with async_timeout.timeout(TIMEOUT, loop=asyncio.get_event_loop()):
+            async with async_timeout.timeout(TIMEOUT):
                 if method == "get":
                     response = await self._session.get(url, headers=headers)
                     return await response.json()
 
-                elif method == "put":
-                    await self._session.put(url, headers=headers, json=data)
+                if method == "post":
+                    response = await self._session.post(url, headers=headers, data=data)
+                    return await response.json()
+
+                if method == "put":
+                    await self._session.put(url, headers=headers, data=data)
 
                 elif method == "patch":
-                    await self._session.patch(url, headers=headers, json=data)
-
-                elif method == "post":
-                    await self._session.post(url, headers=headers, json=data)
+                    await self._session.patch(url, headers=headers, data=data)
 
         except asyncio.TimeoutError as exception:
             _LOGGER.error(
@@ -75,7 +81,6 @@ class SutroApiClient:
                 url,
                 exception,
             )
-
         except (KeyError, TypeError) as exception:
             _LOGGER.error(
                 "Error parsing information from %s - %s",
@@ -90,3 +95,5 @@ class SutroApiClient:
             )
         except Exception as exception:  # pylint: disable=broad-except
             _LOGGER.error("Something really wrong happened! - %s", exception)
+
+        return None
