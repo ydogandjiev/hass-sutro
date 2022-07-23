@@ -3,7 +3,7 @@
   "_template": "gh:oncleben31/cookiecutter-homeassistant-custom-component",
   "class_name_prefix": "Sutro",
   "domain_name": "sutro",
-  "friendly_name": "Sutro Smart Pool Monitor Support",
+  "friendly_name": "Sutro",
   "github_user": "ydogandjiev",
   "project_name": "hass-sutro",
   "test_suite": "no",
