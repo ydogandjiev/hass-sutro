@@ -7,5 +7,9 @@
   "config_flow": true,
   "codeowners": ["@ydogandjiev"],
   "requirements": [],
-  "iot_class": "cloud_polling"
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "iot_class": "cloud_polling",
+  "version": "0.0.1"
 }

@@ -1,5 +1,5 @@
 {
-  "name": "Sutro Smart Pool Monitor Support",
+  "name": "Sutro",
   "hacs": "1.6.0",
   "domains": [
     "sensor"
