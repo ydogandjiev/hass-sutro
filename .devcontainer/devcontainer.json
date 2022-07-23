@@ -3,9 +3,7 @@
   "image": "ludeeus/container:integration-debian",
   "name": "Sutro integration development",
   "context": "..",
-  "appPort": [
-    "9123:8123"
-  ],
+  "appPort": ["9123:8123"],
   "postCreateCommand": "container install",
   "extensions": [
     "ms-python.python",

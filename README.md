@@ -17,9 +17,9 @@ This component integrates Home Assistant with Sutro (https://mysutro.com/), a de
 
 **This component will set up the following platforms.**
 
-| Platform        | Description                   |
-| --------------- | ----------------------------- |
-| `sensor`        | Show measurements from Sutro. |
+| Platform | Description                   |
+| -------- | ----------------------------- |
+| `sensor` | Show measurements from Sutro. |
 
 ![example][exampleimg]
 
