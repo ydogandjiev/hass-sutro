@@ -1,27 +1,21 @@
 """Sensor platform for Sutro."""
-from homeassistant.components.sensor import (
-    SensorDeviceClass,
-    SensorEntity,
-    SensorStateClass,
-)
+from homeassistant.components.sensor import SensorDeviceClass
+from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorStateClass
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import (
-    CONCENTRATION_PARTS_PER_MILLION,
-    PERCENTAGE,
-    TEMP_FAHRENHEIT,
-)
+from homeassistant.const import CONCENTRATION_PARTS_PER_MILLION
+from homeassistant.const import PERCENTAGE
+from homeassistant.const import TEMP_FAHRENHEIT
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import (
-    ATTRIBUTION,
-    DOMAIN,
-    ICON_ACIDITY,
-    ICON_ALKALINITY,
-    ICON_CHLORINE,
-    NAME,
-    VERSION,
-)
+from .const import ATTRIBUTION
+from .const import DOMAIN
+from .const import ICON_ACIDITY
+from .const import ICON_ALKALINITY
+from .const import ICON_CHLORINE
+from .const import NAME
+from .const import VERSION
 from .entity import SutroEntity
 
 

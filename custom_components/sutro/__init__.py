@@ -7,17 +7,20 @@ https://github.com/ydogandjiev/hass-sutro
 from __future__ import annotations
 
 import asyncio
-from datetime import timedelta
 import logging
+from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import UpdateFailed
 
 from .api import SutroApiClient
-from .const import CONF_TOKEN, DOMAIN, PLATFORMS
+from .const import CONF_TOKEN
+from .const import DOMAIN
+from .const import PLATFORMS
 
 SCAN_INTERVAL = timedelta(minutes=30)
 
