@@ -1,23 +1,27 @@
 """Sensor platform for Sutro."""
-from homeassistant.components.sensor import SensorDeviceClass
-from homeassistant.components.sensor import SensorEntity
-from homeassistant.components.sensor import SensorStateClass
+from homeassistant.components.sensor import (
+    SensorDeviceClass,
+    SensorEntity,
+    SensorStateClass,
+)
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONCENTRATION_PARTS_PER_MILLION
-from homeassistant.const import PERCENTAGE
-from homeassistant.const import TEMP_FAHRENHEIT
+from homeassistant.const import (
+    CONCENTRATION_PARTS_PER_MILLION,
+    PERCENTAGE,
+    TEMP_FAHRENHEIT,
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import ATTRIBUTION
-from .const import DOMAIN
-from .const import ICON_ACIDITY
-from .const import ICON_ALKALINITY
-from .const import ICON_BATTERY
-from .const import ICON_CHLORINE
-from .const import ICON_TEMPERATURE
-from .const import NAME
-from .const import VERSION
+from .const import (
+    ATTRIBUTION,
+    DOMAIN,
+    ICON_ACIDITY,
+    ICON_ALKALINITY,
+    ICON_CHLORINE,
+    NAME,
+    VERSION,
+)
 from .entity import SutroEntity
 
 
@@ -120,7 +124,6 @@ class TemperatureSensor(SutroSensor):
     """Representation of a Temperature Sensor."""
 
     _attr_name = f"{NAME} Temperature Sensor"
-    _attr_icon = ICON_TEMPERATURE
     _attr_native_unit_of_measurement = TEMP_FAHRENHEIT
     _attr_device_class = SensorDeviceClass.TEMPERATURE
 
@@ -139,8 +142,8 @@ class BatterySensor(SutroSensor):
     """Representation of a Battery Sensor."""
 
     _attr_name = f"{NAME} Battery"
-    _attr_icon = ICON_BATTERY
     _attr_native_unit_of_measurement = PERCENTAGE
+    _attr_device_class = SensorDeviceClass.BATTERY
 
     @property
     def native_value(self):
