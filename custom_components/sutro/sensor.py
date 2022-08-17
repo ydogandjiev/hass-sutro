@@ -13,9 +13,8 @@ from .const import ATTRIBUTION
 from .const import DOMAIN
 from .const import ICON_ACIDITY
 from .const import ICON_ALKALINITY
-from .const import ICON_BATTERY
+from .const import ICON_CHARGES
 from .const import ICON_CHLORINE
-from .const import ICON_TEMPERATURE
 from .const import NAME
 from .const import VERSION
 from .entity import SutroEntity
@@ -33,6 +32,7 @@ async def async_setup_entry(
             FreeChlorineSensor(coordinator, entry),
             TemperatureSensor(coordinator, entry),
             BatterySensor(coordinator, entry),
+            CartridgeCharges(coordinator, entry),
         ]
     )
 
@@ -120,7 +120,6 @@ class TemperatureSensor(SutroSensor):
     """Representation of a Temperature Sensor."""
 
     _attr_name = f"{NAME} Temperature Sensor"
-    _attr_icon = ICON_TEMPERATURE
     _attr_native_unit_of_measurement = TEMP_FAHRENHEIT
     _attr_device_class = SensorDeviceClass.TEMPERATURE
 
@@ -139,8 +138,8 @@ class BatterySensor(SutroSensor):
     """Representation of a Battery Sensor."""
 
     _attr_name = f"{NAME} Battery"
-    _attr_icon = ICON_BATTERY
     _attr_native_unit_of_measurement = PERCENTAGE
+    _attr_device_class = SensorDeviceClass.BATTERY
 
     @property
     def native_value(self):
@@ -151,3 +150,21 @@ class BatterySensor(SutroSensor):
     def unique_id(self):
         """Return a unique ID to use for the sensor."""
         return f"{self.coordinator.data['me']['device']['serialNumber']}-battery"
+
+
+class CartridgeCharges(SutroSensor):
+    """Representation of a Cartridge Charges Sensor."""
+
+    _attr_name = f"{NAME} Cartridge Charges"
+    _attr_icon = ICON_CHARGES
+    _attr_native_unit_of_measurement = "charges"
+
+    @property
+    def native_value(self):
+        """Return the native value of the sensor."""
+        return int(self.coordinator.data["me"]["device"]["cartridgeCharges"])
+
+    @property
+    def unique_id(self):
+        """Return a unique ID to use for the sensor."""
+        return f"{self.coordinator.data['me']['device']['serialNumber']}-charges"
