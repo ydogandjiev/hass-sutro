@@ -21,6 +21,7 @@ from .api import SutroApiClient
 from .const import CONF_TOKEN
 from .const import DOMAIN
 from .const import PLATFORMS
+from .const import STARTUP_MESSAGE
 
 SCAN_INTERVAL = timedelta(minutes=30)
 
@@ -29,7 +30,9 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up this integration using UI."""
-    hass.data.setdefault(DOMAIN, {})
+    if hass.data.get(DOMAIN) is None:
+        hass.data.setdefault(DOMAIN, {})
+        _LOGGER.info(STARTUP_MESSAGE)
 
     token: str | None = entry.data.get(CONF_TOKEN)
 
