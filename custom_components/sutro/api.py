@@ -34,6 +34,7 @@ class SutroApiClient:
                     batteryLevel
                     serialNumber
                     temperature
+                    cartridgeCharges
                 }
                 pool {
                     latestReading {

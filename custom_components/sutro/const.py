@@ -14,6 +14,7 @@ ICON_ALKALINITY = "mdi:test-tube"
 ICON_CHLORINE = "mdi:water-percent"
 ICON_TEMPERATURE = "mdi:thermometer"
 ICON_BATTERY = "mdi:battery"
+ICON_CHARGES = "mdi:water-outline"
 
 # Platforms
 SENSOR = "sensor"
@@ -22,6 +23,7 @@ PLATFORMS = [SENSOR]
 # Configuration and options
 CONF_TOKEN = "token"
 
+# Logging
 STARTUP_MESSAGE = f"""
 -------------------------------------------------------------------
 {NAME}
