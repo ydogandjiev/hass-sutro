@@ -1,4 +1,7 @@
 """Constants for Sutro."""
+
+from homeassistant.const import Platform
+
 # Base component constants
 NAME = "Sutro"
 DOMAIN = "sutro"
@@ -11,14 +14,16 @@ ISSUE_URL = "https://github.com/ydogandjiev/hass-sutro/issues"
 # Icons
 ICON_ACIDITY = "mdi:ph"
 ICON_ALKALINITY = "mdi:test-tube"
+ICON_BROMINE = "mdi:water-percent"
 ICON_CHLORINE = "mdi:water-percent"
 ICON_TEMPERATURE = "mdi:thermometer"
 ICON_BATTERY = "mdi:battery"
 ICON_CHARGES = "mdi:water-outline"
+ICON_DEVICE_ONLINE = "mdi:check-network-outline"
+ICON_HEALTH = "mdi:hospital-box"
 
 # Platforms
-SENSOR = "sensor"
-PLATFORMS = [SENSOR]
+PLATFORMS = [Platform.SENSOR, Platform.BINARY_SENSOR]
 
 # Configuration and options
 CONF_TOKEN = "token"
