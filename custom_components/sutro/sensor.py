@@ -7,7 +7,9 @@ from homeassistant.const import CONCENTRATION_PARTS_PER_MILLION
 from homeassistant.const import PERCENTAGE
 from homeassistant.const import TEMP_FAHRENHEIT
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+
 
 from .const import ATTRIBUTION
 from .const import DOMAIN
@@ -216,6 +218,7 @@ class DeviceHealthSensor(SutroSensor):
     _attr_state_class = None
     _attr_name = f"{NAME} Device Health"
     _attr_icon = ICON_HEALTH
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def native_value(self):

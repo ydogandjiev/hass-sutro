@@ -5,6 +5,7 @@ from homeassistant.components.binary_sensor import (
     DEVICE_CLASS_OPENING,
     DEVICE_CLASS_PROBLEM,
 )
+from homeassistant.helpers.entity import EntityCategory
 
 
 from .const import ATTRIBUTION
@@ -57,6 +58,7 @@ class DeviceOnlineBinarySensor(SutroBinarySensor):
 
     _attr_name = f"{NAME} Device Online"
     _attr_icon = ICON_DEVICE_ONLINE
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def unique_id(self):
@@ -79,6 +81,7 @@ class HubOnlineBinarySensor(SutroBinarySensor):
 
     _attr_name = f"{NAME} Hub Online"
     _attr_icon = ICON_DEVICE_ONLINE
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def unique_id(self):
@@ -121,6 +124,7 @@ class CoreStatusBinarySensor(SutroBinarySensor):
     """Representation of an Hub Online Binary Sensor."""
 
     _attr_name = f"{NAME} Core Status"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def unique_id(self):
@@ -142,6 +146,7 @@ class NotTakingReadingsBinarySensor(SutroBinarySensor):
     """Representation of an Hub Online Binary Sensor."""
 
     _attr_name = f"{NAME} Taking Readings"
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
 
     @property
     def unique_id(self):
