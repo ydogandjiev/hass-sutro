@@ -1,4 +1,4 @@
-"""Binary sensor platform for integration_blueprint."""
+"""Binary Sensor platform for Sutro."""
 from homeassistant.components.binary_sensor import (
     BinarySensorEntity,
     DEVICE_CLASS_CONNECTIVITY,
