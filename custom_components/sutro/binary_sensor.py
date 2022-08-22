@@ -1,18 +1,16 @@
 """Binary Sensor platform for Sutro."""
-from homeassistant.components.binary_sensor import (
-    BinarySensorEntity,
-    DEVICE_CLASS_CONNECTIVITY,
-    DEVICE_CLASS_OPENING,
-    DEVICE_CLASS_PROBLEM,
-)
+from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.components.binary_sensor import DEVICE_CLASS_CONNECTIVITY
+from homeassistant.components.binary_sensor import DEVICE_CLASS_OPENING
+from homeassistant.components.binary_sensor import DEVICE_CLASS_PROBLEM
 from homeassistant.helpers.entity import EntityCategory
 
 
 from .const import ATTRIBUTION
 from .const import DOMAIN
+from .const import ICON_DEVICE_ONLINE
 from .const import NAME
 from .const import VERSION
-from .const import ICON_DEVICE_ONLINE
 from .entity import SutroEntity
 
 

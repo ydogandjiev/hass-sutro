@@ -15,8 +15,8 @@ from .const import ATTRIBUTION
 from .const import DOMAIN
 from .const import ICON_ACIDITY
 from .const import ICON_ALKALINITY
-from .const import ICON_CHARGES
 from .const import ICON_BROMINE
+from .const import ICON_CHARGES
 from .const import ICON_CHLORINE
 from .const import ICON_HEALTH
 from .const import NAME
