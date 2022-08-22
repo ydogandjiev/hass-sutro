@@ -5,7 +5,6 @@ from homeassistant.components.binary_sensor import DEVICE_CLASS_OPENING
 from homeassistant.components.binary_sensor import DEVICE_CLASS_PROBLEM
 from homeassistant.helpers.entity import EntityCategory
 
-
 from .const import ATTRIBUTION
 from .const import DOMAIN
 from .const import ICON_DEVICE_ONLINE

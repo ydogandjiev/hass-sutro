@@ -1,5 +1,4 @@
 """Constants for Sutro."""
-
 from homeassistant.const import Platform
 
 # Base component constants

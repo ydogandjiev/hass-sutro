@@ -10,7 +10,6 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-
 from .const import ATTRIBUTION
 from .const import DOMAIN
 from .const import ICON_ACIDITY
