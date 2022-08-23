@@ -35,10 +35,19 @@ class SutroApiClient:
                     serialNumber
                     temperature
                     cartridgeCharges
+                    health
+                    coreStatus
+                    lidOpen
+                    online
+                    shouldTakeReadings
+                }
+                hub {
+                    online
                 }
                 pool {
                     latestReading {
                         alkalinity
+                        bromine
                         chlorine
                         ph
                         readingTime
