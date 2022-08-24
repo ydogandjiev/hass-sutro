@@ -5,11 +5,9 @@ from homeassistant.components.binary_sensor import DEVICE_CLASS_OPENING
 from homeassistant.components.binary_sensor import DEVICE_CLASS_PROBLEM
 from homeassistant.helpers.entity import EntityCategory
 
-from .const import ATTRIBUTION
 from .const import DOMAIN
 from .const import ICON_DEVICE_ONLINE
 from .const import NAME
-from .const import VERSION
 from .entity import SutroEntity
 
 
@@ -28,29 +26,26 @@ async def async_setup_entry(hass, entry, async_add_devices):
 
 
 class SutroBinarySensor(SutroEntity, BinarySensorEntity):
-    """sutro Binary Sensor class."""
+    """Sutro Binary Sensor class."""
+
+
+class SutroDeviceBinarySensor(SutroBinarySensor):
+    """Base class for Sutro Device Binary Sensors."""
 
     @property
-    def device_info(self):
-        """Return the parent device information."""
-        device_unique_id = self.coordinator.data["me"]["device"]["serialNumber"]
-        return {
-            "identifiers": {(DOMAIN, device_unique_id)},
-            "name": NAME,
-            "model": VERSION,
-            "manufacturer": NAME,
-        }
+    def extra_state_attributes(self):
+        return {"last_message": self.coordinator.data["me"]["device"]["lastMessage"]}
+
+
+class SutroHubBinarySensor(SutroBinarySensor):
+    """Base class for Sutro Hub Binary Sensors."""
 
     @property
-    def device_state_attributes(self):
-        """Return the state attributes."""
-        return {
-            "attribution": ATTRIBUTION,
-            "integration": DOMAIN,
-        }
+    def extra_state_attributes(self):
+        return {"last_message": self.coordinator.data["me"]["hub"]["lastMessage"]}
 
 
-class DeviceOnlineBinarySensor(SutroBinarySensor):
+class DeviceOnlineBinarySensor(SutroDeviceBinarySensor):
     """Representation of an Device Online Binary Sensor."""
 
     _attr_name = f"{NAME} Device Online"
@@ -73,30 +68,7 @@ class DeviceOnlineBinarySensor(SutroBinarySensor):
         return self.coordinator.data["me"]["device"]["online"]
 
 
-class HubOnlineBinarySensor(SutroBinarySensor):
-    """Representation of an Hub Online Binary Sensor."""
-
-    _attr_name = f"{NAME} Hub Online"
-    _attr_icon = ICON_DEVICE_ONLINE
-    _attr_entity_category = EntityCategory.DIAGNOSTIC
-
-    @property
-    def unique_id(self):
-        """Return a unique ID to use for the binary sensor."""
-        return f"{self.coordinator.data['me']['device']['serialNumber']}-hub-online"
-
-    @property
-    def device_class(self):
-        """Return the class of this binary_sensor."""
-        return DEVICE_CLASS_CONNECTIVITY
-
-    @property
-    def is_on(self):
-        """Return true if the device is connected."""
-        return self.coordinator.data["me"]["hub"]["online"]
-
-
-class DeviceLidOpenBinarySensor(SutroBinarySensor):
+class DeviceLidOpenBinarySensor(SutroDeviceBinarySensor):
     """Representation of an Device Online Binary Sensor."""
 
     _attr_name = f"{NAME} Device Lid Open"
@@ -117,7 +89,7 @@ class DeviceLidOpenBinarySensor(SutroBinarySensor):
         return self.coordinator.data["me"]["device"]["lidOpen"]
 
 
-class CoreStatusBinarySensor(SutroBinarySensor):
+class CoreStatusBinarySensor(SutroDeviceBinarySensor):
     """Representation of an Hub Online Binary Sensor."""
 
     _attr_name = f"{NAME} Core Status"
@@ -139,7 +111,7 @@ class CoreStatusBinarySensor(SutroBinarySensor):
         return not self.coordinator.data["me"]["device"]["coreStatus"]
 
 
-class NotTakingReadingsBinarySensor(SutroBinarySensor):
+class NotTakingReadingsBinarySensor(SutroDeviceBinarySensor):
     """Representation of an Hub Online Binary Sensor."""
 
     _attr_name = f"{NAME} Taking Readings"
@@ -159,3 +131,26 @@ class NotTakingReadingsBinarySensor(SutroBinarySensor):
     def is_on(self):
         """Return true if the device is fine."""
         return not self.coordinator.data["me"]["device"]["shouldTakeReadings"]
+
+
+class HubOnlineBinarySensor(SutroHubBinarySensor):
+    """Representation of an Hub Online Binary Sensor."""
+
+    _attr_name = f"{NAME} Hub Online"
+    _attr_icon = ICON_DEVICE_ONLINE
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    @property
+    def unique_id(self):
+        """Return a unique ID to use for the binary sensor."""
+        return f"{self.coordinator.data['me']['device']['serialNumber']}-hub-online"
+
+    @property
+    def device_class(self):
+        """Return the class of this binary_sensor."""
+        return DEVICE_CLASS_CONNECTIVITY
+
+    @property
+    def is_on(self):
+        """Return true if the device is connected."""
+        return self.coordinator.data["me"]["hub"]["online"]

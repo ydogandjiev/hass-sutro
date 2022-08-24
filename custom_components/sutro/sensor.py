@@ -10,16 +10,16 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import ATTRIBUTION
 from .const import DOMAIN
 from .const import ICON_ACIDITY
 from .const import ICON_ALKALINITY
 from .const import ICON_BROMINE
+from .const import ICON_CHARGER
 from .const import ICON_CHARGES
 from .const import ICON_CHLORINE
 from .const import ICON_HEALTH
+from .const import ICON_WIFI
 from .const import NAME
-from .const import VERSION
 from .entity import SutroEntity
 
 
@@ -38,6 +38,8 @@ async def async_setup_entry(
             CartridgeCharges(coordinator, entry),
             BromineSensor(coordinator, entry),
             DeviceHealthSensor(coordinator, entry),
+            HubChargerStatusSensor(coordinator, entry),
+            HubWifiSSIDSensor(coordinator, entry),
         ]
     )
 
@@ -47,39 +49,36 @@ class SutroSensor(SutroEntity, SensorEntity):
 
     _attr_state_class = SensorStateClass.MEASUREMENT
 
-    @property
-    def device_info(self):
-        """Return the parent device information."""
-        device_unique_id = self.coordinator.data["me"]["device"]["serialNumber"]
-        return {
-            "identifiers": {(DOMAIN, device_unique_id)},
-            "name": NAME,
-            "model": VERSION,
-            "manufacturer": NAME,
-        }
-
-    @property
-    def device_state_attributes(self):
-        """Return the state attributes."""
-        return {
-            "attribution": ATTRIBUTION,
-            "integration": DOMAIN,
-        }
-
 
 class SutroDeviceSensor(SutroSensor):
     """Base class for Sutro Device Sensors."""
 
     @property
     def extra_state_attributes(self):
-        return {
+        return {"last_message": self.coordinator.data["me"]["device"]["lastMessage"]}
+
+
+class SutroDeviceReadingSensor(SutroDeviceSensor):
+    """Base class for Sutro Device Reading Sensors."""
+
+    @property
+    def extra_state_attributes(self):
+        return super().extra_state_attributes | {
             "reading_time": self.coordinator.data["me"]["pool"]["latestReading"][
                 "readingTime"
-            ]
+            ],
         }
 
 
-class AciditySensor(SutroDeviceSensor):
+class SutroHubSensor(SutroSensor):
+    """Base class for Sutro Hub Sensors."""
+
+    @property
+    def extra_state_attributes(self):
+        return {"last_message": self.coordinator.data["me"]["hub"]["lastMessage"]}
+
+
+class AciditySensor(SutroDeviceReadingSensor):
     """Representation of an Acidity Sensor."""
 
     _attr_name = f"{NAME} Acidity Sensor"
@@ -97,7 +96,7 @@ class AciditySensor(SutroDeviceSensor):
         return f"{self.coordinator.data['me']['device']['serialNumber']}-acidity"
 
 
-class AlkalinitySensor(SutroDeviceSensor):
+class AlkalinitySensor(SutroDeviceReadingSensor):
     """Representation of an Alkalinity Sensor."""
 
     _attr_name = f"{NAME} Alkalinity Sensor"
@@ -115,7 +114,7 @@ class AlkalinitySensor(SutroDeviceSensor):
         return f"{self.coordinator.data['me']['device']['serialNumber']}-alkalinity"
 
 
-class FreeChlorineSensor(SutroDeviceSensor):
+class FreeChlorineSensor(SutroDeviceReadingSensor):
     """Representation of a Free Chlorine Sensor."""
 
     _attr_name = f"{NAME} Free Chlorine Sensor"
@@ -136,7 +135,7 @@ class FreeChlorineSensor(SutroDeviceSensor):
         return f"{self.coordinator.data['me']['device']['serialNumber']}-chlorine"
 
 
-class BromineSensor(SutroDeviceSensor):
+class BromineSensor(SutroDeviceReadingSensor):
     """Representation of a Free Chlorine Sensor."""
 
     _attr_name = f"{NAME} Bromine Sensor"
@@ -157,7 +156,7 @@ class BromineSensor(SutroDeviceSensor):
         return f"{self.coordinator.data['me']['device']['serialNumber']}-bromine"
 
 
-class TemperatureSensor(SutroSensor):
+class TemperatureSensor(SutroDeviceSensor):
     """Representation of a Temperature Sensor."""
 
     _attr_name = f"{NAME} Temperature Sensor"
@@ -175,7 +174,7 @@ class TemperatureSensor(SutroSensor):
         return f"{self.coordinator.data['me']['device']['serialNumber']}-temperature"
 
 
-class BatterySensor(SutroSensor):
+class BatterySensor(SutroDeviceSensor):
     """Representation of a Battery Sensor."""
 
     _attr_name = f"{NAME} Battery"
@@ -193,7 +192,7 @@ class BatterySensor(SutroSensor):
         return f"{self.coordinator.data['me']['device']['serialNumber']}-battery"
 
 
-class CartridgeCharges(SutroSensor):
+class CartridgeCharges(SutroDeviceSensor):
     """Representation of a Cartridge Charges Sensor."""
 
     _attr_name = f"{NAME} Cartridge Charges"
@@ -211,7 +210,7 @@ class CartridgeCharges(SutroSensor):
         return f"{self.coordinator.data['me']['device']['serialNumber']}-charges"
 
 
-class DeviceHealthSensor(SutroSensor):
+class DeviceHealthSensor(SutroDeviceSensor):
     """Representation of a Device Health Sensor."""
 
     _attr_state_class = None
@@ -228,3 +227,41 @@ class DeviceHealthSensor(SutroSensor):
     def unique_id(self):
         """Return a unique ID to use for the sensor."""
         return f"{self.coordinator.data['me']['device']['serialNumber']}-health"
+
+
+class HubChargerStatusSensor(SutroHubSensor):
+    """Representation of a Device Health Sensor."""
+
+    _attr_state_class = None
+    _attr_name = f"{NAME} Hub Charger Status"
+    _attr_icon = ICON_CHARGER
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    @property
+    def native_value(self):
+        """Return the native value of the sensor."""
+        return self.coordinator.data["me"]["hub"]["chargerStatus"]
+
+    @property
+    def unique_id(self):
+        """Return a unique ID to use for the sensor."""
+        return f"{self.coordinator.data['me']['device']['serialNumber']}-charger-status"
+
+
+class HubWifiSSIDSensor(SutroHubSensor):
+    """Representation of a Device Health Sensor."""
+
+    _attr_state_class = None
+    _attr_name = f"{NAME} Hub Wi-Fi SSID"
+    _attr_icon = ICON_WIFI
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    @property
+    def native_value(self):
+        """Return the native value of the sensor."""
+        return self.coordinator.data["me"]["hub"]["ssid"]
+
+    @property
+    def unique_id(self):
+        """Return a unique ID to use for the sensor."""
+        return f"{self.coordinator.data['me']['device']['serialNumber']}-hub-ssid"
