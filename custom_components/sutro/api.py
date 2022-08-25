@@ -40,9 +40,14 @@ class SutroApiClient:
                     lidOpen
                     online
                     shouldTakeReadings
+                    lastMessage
+                    currentFirmwareVersion
                 }
                 hub {
                     online
+                    chargerStatus
+                    ssid
+                    lastMessage
                 }
                 pool {
                     latestReading {
