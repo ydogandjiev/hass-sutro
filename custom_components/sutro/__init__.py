@@ -11,14 +11,14 @@ import logging
 from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_TOKEN
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 from homeassistant.helpers.update_coordinator import UpdateFailed
 
-from .api import SutroApiClient
-from .const import CONF_TOKEN
+from .api import SutroDataApiClient
 from .const import DOMAIN
 from .const import PLATFORMS
 from .const import STARTUP_MESSAGE
@@ -38,7 +38,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     if token:
         session = async_get_clientsession(hass)
-        client = SutroApiClient(token, session)
+        client = SutroDataApiClient(token, session)
 
         coordinator = SutroDataUpdateCoordinator(hass, client)
         await coordinator.async_refresh()
@@ -66,7 +66,7 @@ class SutroDataUpdateCoordinator(DataUpdateCoordinator):
     def __init__(
         self,
         hass: HomeAssistant,
-        client: SutroApiClient,
+        client: SutroDataApiClient,
     ) -> None:
         """Initialize."""
         self.api = client
