@@ -4,12 +4,17 @@
       "user": {
         "description": "If you need help with the configuration have a look here: https://github.com/ydogandjiev/hass-sutro",
         "data": {
-          "token": "Token"
+          "token": "Token",
+          "password": "Password",
+          "email": "Email"
         }
       }
     },
     "error": {
-      "auth": "Token is invalid or expired."
+      "auth": "Login failed.",
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
     }
   },
   "options": {

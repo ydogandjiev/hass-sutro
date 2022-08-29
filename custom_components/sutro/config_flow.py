@@ -5,12 +5,14 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.config_entries import OptionsFlow
+from homeassistant.const import CONF_EMAIL
+from homeassistant.const import CONF_PASSWORD
+from homeassistant.const import CONF_TOKEN
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 
-from .api import SutroApiClient
-from .const import CONF_TOKEN
+from .api import SutroLoginApiClient
 from .const import DOMAIN
 from .const import PLATFORMS
 
@@ -23,6 +25,8 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     def __init__(self):
         """Initialize."""
+        self._password: str | None = None
+        self._email: str | None = None
         self._errors = {}
 
     async def async_step_user(self, user_input=None) -> FlowResult:
@@ -30,10 +34,15 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         self._errors = {}
 
         if user_input is not None:
-            data = await self._test_credentials(user_input[CONF_TOKEN])
-            if data:
+            data = await self._get_login_data(
+                email=user_input[CONF_EMAIL], password=user_input[CONF_PASSWORD]
+            )
+            stored_data = {}
+            if data and "login" in data and data["login"] is not None:
+                stored_data[CONF_TOKEN] = data["login"]["token"]
                 return self.async_create_entry(
-                    title=f"{data['me']['firstName']}'s Pool/Spa", data=user_input
+                    title=f"{data['login']['user']['firstName']}'s Pool/Spa",
+                    data=stored_data,
                 )
 
             self._errors["base"] = "auth"
@@ -51,16 +60,22 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Show the configuration form to edit location data."""
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema({vol.Required(CONF_TOKEN): str}),
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_EMAIL): str,
+                    vol.Required(CONF_PASSWORD): str,
+                }
+            ),
             errors=self._errors,
         )
 
-    async def _test_credentials(self, token) -> dict | None:
-        """Return true if credentials is valid."""
+    async def _get_login_data(self, email: str, password: str) -> dict | None:
+        """Return the token if can login."""
         try:
             session = async_create_clientsession(self.hass)
-            client = SutroApiClient(token, session)
-            return await client.async_get_data()
+            client = SutroLoginApiClient(session)
+            ret = await client.async_get_login(email, password)
+            return ret
         except Exception:  # pylint: disable=broad-except
             pass
         return None
