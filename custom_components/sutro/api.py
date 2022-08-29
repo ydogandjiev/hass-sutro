@@ -70,7 +70,7 @@ class SutroApiClient:
 class SutroLoginApiClient(SutroApiClient):
     """Sutro API Client class to handle login."""
 
-    async def async_get_login(self, username, password) -> dict | None:
+    async def async_get_login(self, email, password) -> dict | None:
         """Login with the Sutro Credentials and get the Token."""
 
         query = """
@@ -88,7 +88,7 @@ class SutroLoginApiClient(SutroApiClient):
         payload = {
             "query": query,
             "variables": {
-                "email": username,
+                "email": email,
                 "password": password,
             },
         }
