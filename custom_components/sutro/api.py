@@ -10,62 +10,49 @@ from typing import Any
 import aiohttp
 import async_timeout
 
+# Set a timeout of 10 seconds for API requests
 TIMEOUT = 10
 
+# Initialize a logger for logging errors and debugging
+_LOGGER = logging.getLogger(__package__)
 
-_LOGGER: logging.Logger = logging.getLogger(__package__)
-
+# URL for the Sutro GraphQL API
 SUTRO_GRAPHSQL_URL = "https://api.mysutro.com/graphql"
-
 
 class SutroApiClient:
     def __init__(self, session: aiohttp.ClientSession) -> None:
-        """Sample API Client."""
+        """Base API Client for making requests to the Sutro API."""
         self._session = session
 
-    async def api_wrapper(
-        self, method: str, url: str, data: Any, headers: dict
-    ) -> dict | None:
-        """Get information from the API."""
+    async def api_wrapper(self, method: str, url: str, data: Any, headers: dict) -> dict | None:
+        """Wrapper for handling API requests."""
         try:
             async with async_timeout.timeout(TIMEOUT):
                 if method == "get":
                     response = await self._session.get(url, headers=headers)
-                    return await response.json()
-
-                if method == "post":
+                elif method == "post":
                     response = await self._session.post(url, headers=headers, data=data)
-                    return await response.json()
-
-                if method == "put":
-                    await self._session.put(url, headers=headers, data=data)
-
+                elif method == "put":
+                    response = await self._session.put(url, headers=headers, data=data)
                 elif method == "patch":
-                    await self._session.patch(url, headers=headers, data=data)
-
+                    response = await self._session.patch(url, headers=headers, data=data)
+                else:
+                    raise ValueError("Invalid method specified")
+                
+                response.raise_for_status()
+                return await response.json()
         except asyncio.TimeoutError as exception:
-            _LOGGER.error(
-                "Timeout error fetching information from %s - %s",
-                url,
-                exception,
-            )
-        except (KeyError, TypeError) as exception:
-            _LOGGER.error(
-                "Error parsing information from %s - %s",
-                url,
-                exception,
-            )
-        except (aiohttp.ClientError, socket.gaierror) as exception:
-            _LOGGER.error(
-                "Error fetching information from %s - %s",
-                url,
-                exception,
-            )
+            _LOGGER.error("Timeout error fetching information from %s - %s", url, exception)
+        except aiohttp.ClientError as exception:
+            _LOGGER.error("Error fetching information from %s - %s", url, exception)
+        except (KeyError, TypeError, ValueError) as exception:
+            _LOGGER.error("Error parsing information from %s - %s", url, exception)
+        except socket.gaierror as exception:
+            _LOGGER.error("Error resolving the hostname - %s", exception)
         except Exception as exception:  # pylint: disable=broad-except
             _LOGGER.error("Something really wrong happened! - %s", exception)
 
         return None
-
 
 class SutroLoginApiClient(SutroApiClient):
     """Sutro API Client class to handle login."""
@@ -161,3 +148,4 @@ class SutroDataApiClient(SutroApiClient):
         if response:
             return response["data"]
         return None
+
