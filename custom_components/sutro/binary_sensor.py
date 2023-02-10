@@ -1,4 +1,3 @@
-
 """Binary Sensor platform for Sutro."""
 import logging
 import os
@@ -16,6 +15,7 @@ from .entity import SutroEntity
 logger = logging.getLogger(__name__)
 
 NAME = os.environ.get("NAME")
+
 
 async def async_setup_entry(hass, entry, async_add_devices):
     """Setup binary_sensor platform."""
@@ -40,9 +40,7 @@ class SutroDeviceBinarySensor(SutroBinarySensor):
 
     @property
     def extra_state_attributes(self):
-        return {
-            "last_message": self.coordinator.data["me"]["device"]["lastMessage"]
-        }
+        return {"last_message": self.coordinator.data["me"]["device"]["lastMessage"]}
 
 
 class SutroHubBinarySensor(SutroBinarySensor):
