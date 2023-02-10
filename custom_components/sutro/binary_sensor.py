@@ -1,6 +1,7 @@
 """Binary Sensor platform for Sutro."""
 import logging
 import os
+
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.components.binary_sensor import DEVICE_CLASS_CONNECTIVITY
 from homeassistant.components.binary_sensor import DEVICE_CLASS_OPENING
