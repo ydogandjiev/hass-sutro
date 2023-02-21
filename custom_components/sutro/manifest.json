@@ -3,7 +3,7 @@
   "name": "Sutro",
   "documentation": "https://github.com/ydogandjiev/hass-sutro",
   "issue_tracker": "https://github.com/ydogandjiev/hass-sutro/issues",
-  "dependencies": [],
+  "dependencies": ["logger"],
   "config_flow": true,
   "codeowners": ["@ydogandjiev"],
   "requirements": [],
