@@ -1,15 +1,15 @@
 {
   "domain": "sutro",
   "name": "Sutro",
+  "codeowners": ["@ydogandjiev"],
+  "config_flow": true,
   "dependencies": ["logger"],
   "documentation": "https://github.com/ydogandjiev/hass-sutro",
-  "issue_tracker": "https://github.com/ydogandjiev/hass-sutro/issues",
-  "config_flow": true,
-  "codeowners": ["@ydogandjiev"],
-  "requirements": [],
-  "ssdp": [],
-  "zeroconf": [],
   "homekit": {},
   "iot_class": "cloud_polling",
-  "version": "0.0.1"
+  "issue_tracker": "https://github.com/ydogandjiev/hass-sutro/issues",
+  "requirements": [],
+  "ssdp": [],
+  "version": "0.0.1",
+  "zeroconf": []
 }
