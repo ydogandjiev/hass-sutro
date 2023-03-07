@@ -1,4 +1,7 @@
 """Binary Sensor platform for Sutro."""
+import logging
+import os
+
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.components.binary_sensor import DEVICE_CLASS_CONNECTIVITY
 from homeassistant.components.binary_sensor import DEVICE_CLASS_OPENING
@@ -7,8 +10,12 @@ from homeassistant.helpers.entity import EntityCategory
 
 from .const import DOMAIN
 from .const import ICON_DEVICE_ONLINE
-from .const import NAME
 from .entity import SutroEntity
+
+
+logger = logging.getLogger(__name__)
+
+NAME = os.environ.get("NAME")
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
@@ -46,7 +53,7 @@ class SutroHubBinarySensor(SutroBinarySensor):
 
 
 class DeviceOnlineBinarySensor(SutroDeviceBinarySensor):
-    """Representation of an Device Online Binary Sensor."""
+    """Representation of a Device Online Binary Sensor."""
 
     _attr_name = f"{NAME} Device Online"
     _attr_icon = ICON_DEVICE_ONLINE
@@ -55,7 +62,8 @@ class DeviceOnlineBinarySensor(SutroDeviceBinarySensor):
     @property
     def unique_id(self):
         """Return a unique ID to use for the binary sensor."""
-        return f"{self.coordinator.data['me']['device']['serialNumber']}-device-online"
+        device_serial = self.coordinator.data["me"]["device"]["serialNumber"]
+        return f"{device_serial}-device-online"
 
     @property
     def device_class(self):
@@ -69,14 +77,15 @@ class DeviceOnlineBinarySensor(SutroDeviceBinarySensor):
 
 
 class DeviceLidOpenBinarySensor(SutroDeviceBinarySensor):
-    """Representation of an Device Online Binary Sensor."""
+    """Representation of a Device Lid Open Binary Sensor."""
 
     _attr_name = f"{NAME} Device Lid Open"
 
     @property
     def unique_id(self):
         """Return a unique ID to use for the binary sensor."""
-        return f"{self.coordinator.data['me']['device']['serialNumber']}-lid-open"
+        device_serial = self.coordinator.data["me"]["device"]["serialNumber"]
+        return f"{device_serial}-lid-open"
 
     @property
     def device_class(self):
@@ -90,7 +99,7 @@ class DeviceLidOpenBinarySensor(SutroDeviceBinarySensor):
 
 
 class CoreStatusBinarySensor(SutroDeviceBinarySensor):
-    """Representation of an Hub Online Binary Sensor."""
+    """Representation of a Core Status Binary Sensor."""
 
     _attr_name = f"{NAME} Core Status"
     _attr_entity_category = EntityCategory.DIAGNOSTIC
@@ -98,7 +107,8 @@ class CoreStatusBinarySensor(SutroDeviceBinarySensor):
     @property
     def unique_id(self):
         """Return a unique ID to use for the binary sensor."""
-        return f"{self.coordinator.data['me']['device']['serialNumber']}-core-status"
+        device_serial = self.coordinator.data["me"]["device"]["serialNumber"]
+        return f"{device_serial}-core-status"
 
     @property
     def device_class(self):
@@ -112,7 +122,7 @@ class CoreStatusBinarySensor(SutroDeviceBinarySensor):
 
 
 class NotTakingReadingsBinarySensor(SutroDeviceBinarySensor):
-    """Representation of an Hub Online Binary Sensor."""
+    """Representation of a Not Taking Readings Binary Sensor."""
 
     _attr_name = f"{NAME} Taking Readings"
     _attr_entity_category = EntityCategory.DIAGNOSTIC
@@ -120,7 +130,8 @@ class NotTakingReadingsBinarySensor(SutroDeviceBinarySensor):
     @property
     def unique_id(self):
         """Return a unique ID to use for the binary sensor."""
-        return f"{self.coordinator.data['me']['device']['serialNumber']}-not-taking-readings"
+        device_serial = self.coordinator.data["me"]["device"]["serialNumber"]
+        return f"{device_serial}-not-taking-readings"
 
     @property
     def device_class(self):
@@ -134,7 +145,7 @@ class NotTakingReadingsBinarySensor(SutroDeviceBinarySensor):
 
 
 class HubOnlineBinarySensor(SutroHubBinarySensor):
-    """Representation of an Hub Online Binary Sensor."""
+    """Representation of a Hub Online Binary Sensor."""
 
     _attr_name = f"{NAME} Hub Online"
     _attr_icon = ICON_DEVICE_ONLINE
@@ -143,7 +154,8 @@ class HubOnlineBinarySensor(SutroHubBinarySensor):
     @property
     def unique_id(self):
         """Return a unique ID to use for the binary sensor."""
-        return f"{self.coordinator.data['me']['device']['serialNumber']}-hub-online"
+        device_serial = self.coordinator.data["me"]["device"]["serialNumber"]
+        return f"{device_serial}-hub-online"
 
     @property
     def device_class(self):

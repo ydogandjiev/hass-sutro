@@ -74,10 +74,9 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         try:
             session = async_create_clientsession(self.hass)
             client = SutroLoginApiClient(session)
-            ret = await client.async_get_login(email, password)
-            return ret
-        except Exception:  # pylint: disable=broad-except
-            pass
+            return await client.async_get_login(email, password)
+        except Exception as ex:
+            self.hass.components.logger.error(f"Failed to get login data: {ex}")
         return None
 
 
