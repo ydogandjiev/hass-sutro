@@ -75,6 +75,9 @@ class SutroLoginApiClient(SutroApiClient):
                         firstName
                         lastName
                         email
+                        pool {
+                            type
+                        }
                     }
                     token
                 }

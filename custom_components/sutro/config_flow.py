@@ -41,7 +41,7 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             if data and "login" in data and data["login"] is not None:
                 stored_data[CONF_TOKEN] = data["login"]["token"]
                 return self.async_create_entry(
-                    title=f"{data['login']['user']['firstName']}'s Pool/Spa",
+                    title=f"{data['login']['user']['firstName']}'s {data['login']['user']['pool']['type'].title()}",
                     data=stored_data,
                 )
 
