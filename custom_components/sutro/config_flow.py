@@ -42,8 +42,8 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 stored_data[CONF_TOKEN] = data["login"]["token"]
 
                 pool_type = "Pool/Spa"
-                if data['login']['user']['pool']['type']:
-                    pool_type = data['login']['user']['pool']['type'].title()
+                if data["login"]["user"]["pool"]["type"]:
+                    pool_type = data["login"]["user"]["pool"]["type"].title()
                 return self.async_create_entry(
                     title=f"{data['login']['user']['firstName']}'s {pool_type}",
                     data=stored_data,
