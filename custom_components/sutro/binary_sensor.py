@@ -1,17 +1,14 @@
 """Binary Sensor platform for Sutro."""
 import logging
 
+from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.binary_sensor import BinarySensorEntity
-from homeassistant.components.binary_sensor import DEVICE_CLASS_CONNECTIVITY
-from homeassistant.components.binary_sensor import DEVICE_CLASS_OPENING
-from homeassistant.components.binary_sensor import DEVICE_CLASS_PROBLEM
 from homeassistant.helpers.entity import EntityCategory
 
 from .const import DOMAIN
 from .const import ICON_DEVICE_ONLINE
 from .const import NAME
 from .entity import SutroEntity
-
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +63,7 @@ class DeviceOnlineBinarySensor(SutroDeviceBinarySensor):
     @property
     def device_class(self):
         """Return the class of this binary_sensor."""
-        return DEVICE_CLASS_CONNECTIVITY
+        return BinarySensorDeviceClass.CONNECTIVITY
 
     @property
     def is_on(self):
@@ -88,7 +85,7 @@ class DeviceLidOpenBinarySensor(SutroDeviceBinarySensor):
     @property
     def device_class(self):
         """Return the class of this binary_sensor."""
-        return DEVICE_CLASS_OPENING
+        return BinarySensorDeviceClass.OPENING
 
     @property
     def is_on(self):
@@ -111,7 +108,7 @@ class CoreStatusBinarySensor(SutroDeviceBinarySensor):
     @property
     def device_class(self):
         """Return the class of this binary_sensor."""
-        return DEVICE_CLASS_PROBLEM
+        return BinarySensorDeviceClass.PROBLEM
 
     @property
     def is_on(self):
@@ -134,7 +131,7 @@ class NotTakingReadingsBinarySensor(SutroDeviceBinarySensor):
     @property
     def device_class(self):
         """Return the class of this binary_sensor."""
-        return DEVICE_CLASS_PROBLEM
+        return BinarySensorDeviceClass.PROBLEM
 
     @property
     def is_on(self):
@@ -158,7 +155,7 @@ class HubOnlineBinarySensor(SutroHubBinarySensor):
     @property
     def device_class(self):
         """Return the class of this binary_sensor."""
-        return DEVICE_CLASS_CONNECTIVITY
+        return BinarySensorDeviceClass.CONNECTIVITY
 
     @property
     def is_on(self):
