@@ -2,14 +2,14 @@
 import logging
 import os
 
-from homeassistant.components.binary_sensor import BinarySensorDeviceClass
-from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
+    BinarySensorEntity,
+)
 from homeassistant.helpers.entity import EntityCategory
 
-from .const import DOMAIN
-from .const import ICON_DEVICE_ONLINE
+from .const import DOMAIN, ICON_DEVICE_ONLINE
 from .entity import SutroEntity
-
 
 logger = logging.getLogger(__name__)
 
