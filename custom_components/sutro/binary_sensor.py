@@ -1,6 +1,5 @@
 """Binary Sensor platform for Sutro."""
 import logging
-import os
 
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.binary_sensor import BinarySensorEntity
@@ -8,11 +7,10 @@ from homeassistant.helpers.entity import EntityCategory
 
 from .const import DOMAIN
 from .const import ICON_DEVICE_ONLINE
+from .const import NAME
 from .entity import SutroEntity
 
 logger = logging.getLogger(__name__)
-
-NAME = os.environ.get("NAME")
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
