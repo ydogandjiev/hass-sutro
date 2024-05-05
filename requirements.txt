@@ -1,5 +1,5 @@
 aiohttp==3.9.5
-async_timeout==4.0.2
+async_timeout==4.0.3
 colorlog==6.7.0
 homeassistant==2024.5.1
 pip==24.0
