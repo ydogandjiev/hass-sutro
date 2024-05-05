@@ -55,6 +55,7 @@ class SutroDeviceSensor(SutroSensor):
 
     @property
     def extra_state_attributes(self):
+        """Return a dictionary containing the last message."""
         return {"last_message": self.coordinator.data["me"]["device"]["lastMessage"]}
 
 
@@ -63,6 +64,7 @@ class SutroDeviceReadingSensor(SutroDeviceSensor):
 
     @property
     def extra_state_attributes(self):
+        """Return a dictionary containing the latest reading."""
         return super().extra_state_attributes | {
             "reading_time": self.coordinator.data["me"]["pool"]["latestReading"][
                 "readingTime"
@@ -75,6 +77,7 @@ class SutroHubSensor(SutroSensor):
 
     @property
     def extra_state_attributes(self):
+        """Return a dictionary containing the last message."""
         return {"last_message": self.coordinator.data["me"]["hub"]["lastMessage"]}
 
 

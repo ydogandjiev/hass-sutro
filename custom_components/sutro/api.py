@@ -21,14 +21,16 @@ SUTRO_GRAPHSQL_URL = "https://api.mysutro.com/graphql"
 
 
 class SutroApiClient:
+    """Base API Client for making requests to the Sutro API."""
+
     def __init__(self, session: aiohttp.ClientSession) -> None:
-        """Base API Client for making requests to the Sutro API."""
+        """Initialize the API Client."""
         self._session = session
 
     async def api_wrapper(
         self, method: str, url: str, data: Any, headers: dict
     ) -> dict | None:
-        """Wrapper for handling API requests."""
+        """Wrap the API requests to handle errors and exceptions."""
         try:
             async with async_timeout.timeout(TIMEOUT):
                 if method == "get":
@@ -107,7 +109,7 @@ class SutroLoginApiClient(SutroApiClient):
 
 
 class SutroDataApiClient(SutroApiClient):
-    """Sutro API Client class to get data"""
+    """Sutro API Client class to get data."""
 
     def __init__(self, token: str, session: aiohttp.ClientSession) -> None:
         """Inititalize the Data API Class."""
