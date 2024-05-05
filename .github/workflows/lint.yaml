@@ -10,8 +10,8 @@ on:
 
 jobs:
   pre-commit:
+    name: "Pre-commit"
     runs-on: "ubuntu-latest"
-    name: Pre-commit
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4

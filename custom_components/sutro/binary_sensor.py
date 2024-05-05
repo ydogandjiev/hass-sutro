@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
-    """Setup binary_sensor platform."""
+    """Set up the binary sensors for the Sutro integration."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_devices(
         [
@@ -36,6 +36,7 @@ class SutroDeviceBinarySensor(SutroBinarySensor):
 
     @property
     def extra_state_attributes(self):
+        """Return a dictionary containing the last message."""
         return {"last_message": self.coordinator.data["me"]["device"]["lastMessage"]}
 
 
@@ -44,6 +45,7 @@ class SutroHubBinarySensor(SutroBinarySensor):
 
     @property
     def extra_state_attributes(self):
+        """Return a dictionary containing the last message."""
         return {"last_message": self.coordinator.data["me"]["hub"]["lastMessage"]}
 
 
