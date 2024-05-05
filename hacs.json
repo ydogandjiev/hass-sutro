@@ -1,6 +1,6 @@
 {
   "name": "Sutro",
   "hacs": "1.6.0",
-  "homeassistant": "0.118.0",
+  "homeassistant": "2023.8.0",
   "render_readme": true
 }
