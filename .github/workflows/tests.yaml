@@ -19,10 +19,10 @@ jobs:
     name: Pre-commit
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3.5.0
+        uses: actions/checkout@v4
 
       - name: Set up Python ${{ env.DEFAULT_PYTHON }}
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v5.1.0
         with:
           python-version: ${{ env.DEFAULT_PYTHON }}
 
@@ -44,20 +44,19 @@ jobs:
     name: HACS
     steps:
       - name: Check out the repository
-        uses: "actions/checkout@v3.5.0"
+        uses: "actions/checkout@v4"
 
       - name: HACS validation
-        uses: "hacs/action@22.5.0"
+        uses: "hacs/action@main"
         with:
           category: "integration"
-          ignore: brands
 
   hassfest:
     runs-on: "ubuntu-latest"
     name: Hassfest
     steps:
       - name: Check out the repository
-        uses: "actions/checkout@v3.5.0"
+        uses: "actions/checkout@v4"
 
       - name: Hassfest validation
         uses: "home-assistant/actions/hassfest@master"

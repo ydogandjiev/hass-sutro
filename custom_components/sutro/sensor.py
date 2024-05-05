@@ -5,7 +5,7 @@ from homeassistant.components.sensor import SensorStateClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONCENTRATION_PARTS_PER_MILLION
 from homeassistant.const import PERCENTAGE
-from homeassistant.const import TEMP_FAHRENHEIT
+from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -160,7 +160,7 @@ class TemperatureSensor(SutroDeviceSensor):
     """Representation of a Temperature Sensor."""
 
     _attr_name = f"{NAME} Temperature Sensor"
-    _attr_native_unit_of_measurement = TEMP_FAHRENHEIT
+    _attr_native_unit_of_measurement = UnitOfTemperature.FAHRENHEIT
     _attr_device_class = SensorDeviceClass.TEMPERATURE
 
     @property
