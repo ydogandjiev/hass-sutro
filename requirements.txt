@@ -4,4 +4,4 @@ colorlog==6.8.2
 homeassistant==2024.5.1
 pip==24.0
 ruff==0.4.3
-voluptuous==0.13.1
+voluptuous==0.14.2
