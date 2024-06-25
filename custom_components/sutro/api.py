@@ -154,10 +154,14 @@ class SutroDataApiClient(SutroApiClient):
             }
         }
         """
+        payload = {
+            "query": query,
+        }
         headers = {
+            "Content-Type": "application/json",
             "Authorization": f"Bearer {self._token}",
         }
-        response = await self.api_wrapper("post", SUTRO_GRAPHSQL_URL, query, headers)
+        response = await self.api_wrapper("post", SUTRO_GRAPHSQL_URL, json.dumps(payload), headers)
         if response:
             return response["data"]
         return None
