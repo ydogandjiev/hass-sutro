@@ -16,15 +16,15 @@ ICON_ALKALINITY = "mdi:test-tube"
 ICON_BROMINE = "mdi:water-percent"
 ICON_CHARGER = "mdi:battery-charging"
 ICON_CHLORINE = "mdi:water-percent"
-ICON_TEMPERATURE = "mdi:thermometer"
 ICON_BATTERY = "mdi:battery"
 ICON_CHARGES = "mdi:water-outline"
 ICON_DEVICE_ONLINE = "mdi:check-network-outline"
 ICON_HEALTH = "mdi:hospital-box"
+ICON_RECOMMENDATION = "mdi:format-list-checks"
 ICON_WIFI = "mdi:wifi"
 
 # Platforms
-PLATFORMS = [Platform.SENSOR, Platform.BINARY_SENSOR]
+PLATFORMS = [Platform.SENSOR, Platform.BINARY_SENSOR, Platform.TODO]
 
 # Configuration and options
 CONF_TOKEN = "token"

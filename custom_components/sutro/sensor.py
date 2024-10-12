@@ -18,6 +18,7 @@ from .const import ICON_CHARGER
 from .const import ICON_CHARGES
 from .const import ICON_CHLORINE
 from .const import ICON_HEALTH
+from .const import ICON_RECOMMENDATION
 from .const import ICON_WIFI
 from .const import NAME
 from .entity import SutroEntity
@@ -26,7 +27,7 @@ from .entity import SutroEntity
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    """Set up the Sutro sensors."""
+    """Set up the sensors for the Sutro integration."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_entities(
         [
@@ -40,6 +41,7 @@ async def async_setup_entry(
             DeviceHealthSensor(coordinator, entry),
             HubChargerStatusSensor(coordinator, entry),
             HubWifiSSIDSensor(coordinator, entry),
+            RecommendationSensor(coordinator, entry),
         ]
     )
 
@@ -268,3 +270,21 @@ class HubWifiSSIDSensor(SutroHubSensor):
     def unique_id(self):
         """Return a unique ID to use for the sensor."""
         return f"{self.coordinator.data['me']['device']['serialNumber']}-hub-ssid"
+
+
+class RecommendationSensor(SutroHubSensor):
+    """Representation of a Recommendation Sensor."""
+
+    _attr_state_class = None
+    _attr_name = f"{NAME} Recommendation"
+    _attr_icon = ICON_RECOMMENDATION
+
+    @property
+    def native_value(self):
+        """Return the native value of the sensor."""
+        return self.coordinator.data["me"]["pool"]["latestRecommendations"]["recommendations"][0]["treatment"]
+
+    @property
+    def unique_id(self):
+        """Return a unique ID to use for the sensor."""
+        return f"{self.coordinator.data['me']['device']['serialNumber']}-recommendation"

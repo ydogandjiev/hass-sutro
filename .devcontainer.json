@@ -3,8 +3,12 @@
   "image": "mcr.microsoft.com/devcontainers/python:3.12-bullseye",
   "name": "Sutro integration development",
   "postCreateCommand": "scripts/setup",
-  "forwardPorts": [8123],
+  "forwardPorts": [5678,8123],
   "portsAttributes": {
+    "5678": {
+      "label": "Home Assistant Debugger",
+      "onAutoForward": "notify"
+    },
     "8123": {
       "label": "Home Assistant",
       "onAutoForward": "notify"
@@ -23,7 +27,6 @@
         "editor.tabSize": 4,
         "python.pythonPath": "/usr/bin/python3",
         "python.analysis.autoSearchPaths": false,
-        "python.linting.pylintEnabled": true,
         "python.linting.enabled": true,
         "python.formatting.provider": "black",
         "python.formatting.blackPath": "/usr/local/py-utils/bin/black",

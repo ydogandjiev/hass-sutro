@@ -1,4 +1,5 @@
 """Sutro API Client."""
+
 from __future__ import annotations
 
 import asyncio
@@ -9,6 +10,7 @@ from typing import Any
 
 import aiohttp
 import async_timeout
+from datetime import datetime, timezone
 
 # Set a timeout of 10 seconds for API requests
 TIMEOUT = 10
@@ -143,6 +145,27 @@ class SutroDataApiClient(SutroApiClient):
                     lastMessage
                 }
                 pool {
+                    latestRecommendations {
+                        conflictWarning
+                        recommendations {
+                            id
+                            chemical {
+                                behaviour
+                                image
+                                name
+                                types
+                                packageSize
+                                packageSizeUnit
+                                upc
+                            }
+                            completedAt
+                            expiredAt
+                            type
+                            decision
+                            explanation
+                            treatment
+                        }
+                    }
                     latestReading {
                         alkalinity
                         bromine
@@ -156,6 +179,36 @@ class SutroDataApiClient(SutroApiClient):
         """
         payload = {
             "query": query,
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self._token}",
+        }
+        response = await self.api_wrapper(
+            "post", SUTRO_GRAPHSQL_URL, json.dumps(payload), headers
+        )
+        if response:
+            return response["data"]
+        return None
+
+    async def async_complete_recommendation(self, recommendation_id) -> dict | None:
+        """Complete a recommendation."""
+        query = """
+        mutation ($recommendationId: ID!, $completedAt: DateTime) {
+            completeRecommendation(recommendationId: $recommendationId, completedAt: $completedAt) {
+                completedAt
+                success
+            }
+        }
+        """
+        current_time = datetime.now(timezone.utc).isoformat()
+
+        payload = {
+            "query": query,
+            "variables": {
+                "recommendationId": recommendation_id,
+                "completedAt": current_time,
+            },
         }
         headers = {
             "Content-Type": "application/json",
