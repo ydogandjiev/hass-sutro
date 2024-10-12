@@ -1,5 +1,11 @@
 """Todo list platform for Sutro."""
-from homeassistant.components.todo import TodoListEntity, TodoItem, TodoItemStatus, TodoListEntityFeature
+
+from homeassistant.components.todo import (
+    TodoListEntity,
+    TodoItem,
+    TodoItemStatus,
+    TodoListEntityFeature,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -34,7 +40,9 @@ class RecommendationsList(SutroEntity, TodoListEntity):
     @property
     def unique_id(self):
         """Return a unique ID to use for the list."""
-        return f"{self.coordinator.data['me']['device']['serialNumber']}-recommendations"
+        return (
+            f"{self.coordinator.data['me']['device']['serialNumber']}-recommendations"
+        )
 
     @property
     def todo_items(self):
@@ -43,14 +51,22 @@ class RecommendationsList(SutroEntity, TodoListEntity):
             return None
         else:
             items = []
-            for recommendation in self.coordinator.data["me"]["pool"]["latestRecommendations"]["recommendations"]:
-                recommendation_status = TodoItemStatus.NEEDS_ACTION if recommendation["completedAt"] is None else TodoItemStatus.COMPLETED
-                items.append(TodoItem(
-                    summary=recommendation["treatment"],
-                    description=recommendation["explanation"],
-                    uid=recommendation["id"],
-                    status=recommendation_status
-                ))
+            for recommendation in self.coordinator.data["me"]["pool"][
+                "latestRecommendations"
+            ]["recommendations"]:
+                recommendation_status = (
+                    TodoItemStatus.NEEDS_ACTION
+                    if recommendation["completedAt"] is None
+                    else TodoItemStatus.COMPLETED
+                )
+                items.append(
+                    TodoItem(
+                        summary=recommendation["treatment"],
+                        description=recommendation["explanation"],
+                        uid=recommendation["id"],
+                        status=recommendation_status,
+                    )
+                )
 
             return items
 
