@@ -20,7 +20,6 @@ ICON_BATTERY = "mdi:battery"
 ICON_CHARGES = "mdi:water-outline"
 ICON_DEVICE_ONLINE = "mdi:check-network-outline"
 ICON_HEALTH = "mdi:hospital-box"
-ICON_RECOMMENDATION = "mdi:format-list-checks"
 ICON_WIFI = "mdi:wifi"
 
 # Platforms
