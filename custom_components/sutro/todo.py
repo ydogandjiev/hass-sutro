@@ -24,9 +24,7 @@ class RecommendationsList(SutroEntity, TodoListEntity):
     """Representation of a Recommendations Todo List."""
 
     _attr_has_entity_name = True
-    _attr_supported_features = (
-        TodoListEntityFeature.UPDATE_TODO_ITEM
-    )
+    _attr_supported_features = TodoListEntityFeature.UPDATE_TODO_ITEM
 
     def __init__(self, coordinator, entry) -> None:
         """Initialize RecommendationsList."""
