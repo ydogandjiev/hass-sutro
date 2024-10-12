@@ -3,7 +3,7 @@
   "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
   "name": "Sutro integration development",
   "postCreateCommand": "scripts/setup",
-  "forwardPorts": [5678,8123],
+  "forwardPorts": [5678, 8123],
   "portsAttributes": {
     "5678": {
       "label": "Home Assistant Debugger",

@@ -1,16 +1,16 @@
 """Sutro API Client."""
-
 from __future__ import annotations
 
 import asyncio
 import json
 import logging
 import socket
+from datetime import datetime
+from datetime import timezone
 from typing import Any
 
 import aiohttp
 import async_timeout
-from datetime import datetime, timezone
 
 # Set a timeout of 10 seconds for API requests
 TIMEOUT = 10

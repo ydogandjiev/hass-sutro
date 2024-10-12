@@ -1,11 +1,8 @@
 """Todo list platform for Sutro."""
-
-from homeassistant.components.todo import (
-    TodoListEntity,
-    TodoItem,
-    TodoItemStatus,
-    TodoListEntityFeature,
-)
+from homeassistant.components.todo import TodoItem
+from homeassistant.components.todo import TodoItemStatus
+from homeassistant.components.todo import TodoListEntity
+from homeassistant.components.todo import TodoListEntityFeature
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
