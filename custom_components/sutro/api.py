@@ -243,9 +243,6 @@ class SutroDataApiClient(SutroApiClient):
             "Authorization": f"Bearer {self._token}",
         }
 
-        _LOGGER.info("Uncompleting recommendation %s", recommendation_id)
-        _LOGGER.info("Payload: %s", payload)
-
         response = await self.api_wrapper(
             "post", SUTRO_GRAPHSQL_URL, json.dumps(payload), headers
         )
