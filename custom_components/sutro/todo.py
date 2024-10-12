@@ -1,3 +1,4 @@
+"""Todo list platform for Sutro."""
 from homeassistant.components.todo import TodoListEntity, TodoItem, TodoItemStatus, TodoListEntityFeature
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -47,16 +48,18 @@ class RecommendationsList(SutroEntity, TodoListEntity):
             for recommendation in self.coordinator.data["me"]["pool"]["latestRecommendations"]["recommendations"]:
                 recommendation_status = TodoItemStatus.NEEDS_ACTION if recommendation["completedAt"] is None else TodoItemStatus.COMPLETED
                 items.append(TodoItem(
-                    summary = recommendation["treatment"],
-                    description = recommendation["explanation"],
-                    uid = recommendation["id"],
-                    status = recommendation_status
+                    summary=recommendation["treatment"],
+                    description=recommendation["explanation"],
+                    uid=recommendation["id"],
+                    status=recommendation_status
                 ))
 
             return items
 
     async def async_update_todo_item(self, item: TodoItem) -> None:
         """Update an item to the To-do list."""
-        for recommendation in self.coordinator.data["me"]["pool"]["latestRecommendations"]["recommendations"]:
-            if recommendation["id"] == item.uid:
-                await self.coordinator.api.async_complete_recommendation(item.uid)
+        if item.status == TodoItemStatus.COMPLETED:
+            await self.coordinator.api.async_complete_recommendation(item.uid)
+        else:
+            await self.coordinator.api.async_uncomplete_recommendation(item.uid)
+        await self.coordinator.async_refresh()

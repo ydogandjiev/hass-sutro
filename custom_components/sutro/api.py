@@ -220,3 +220,35 @@ class SutroDataApiClient(SutroApiClient):
         if response:
             return response["data"]
         return None
+
+    async def async_uncomplete_recommendation(self, recommendation_id) -> dict | None:
+        """Uncomplete a recommendation."""
+        query = """
+        mutation ($recommendationId: ID!, $completedAt: DateTime) {
+            completeRecommendation(recommendationId: $recommendationId, completedAt: $completedAt) {
+                completedAt
+                success
+            }
+        }
+        """
+        payload = {
+            "query": query,
+            "variables": {
+                "recommendationId": recommendation_id,
+                "completedAt": None,
+            },
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self._token}",
+        }
+
+        _LOGGER.info("Uncompleting recommendation %s", recommendation_id)
+        _LOGGER.info("Payload: %s", payload)
+
+        response = await self.api_wrapper(
+            "post", SUTRO_GRAPHSQL_URL, json.dumps(payload), headers
+        )
+        if response:
+            return response["data"]
+        return None
