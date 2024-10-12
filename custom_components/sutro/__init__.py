@@ -49,15 +49,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
-        """
-        for platform in PLATFORMS:
-            if entry.options.get(platform, True):
-                coordinator.platforms.append(platform)
-                hass.async_create_task(
-                    await hass.config_entries.async_forward_entry_setups(entry, platform)
-                )
-        """
-
         entry.add_update_listener(async_reload_entry)
 
     return True
@@ -73,7 +64,6 @@ class SutroDataUpdateCoordinator(DataUpdateCoordinator):
     ) -> None:
         """Initialize."""
         self.api = client
-        self.platforms: list[str] = []
 
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
 
@@ -91,9 +81,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     unloaded = all(
         await asyncio.gather(
             *[
-                hass.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-                if platform in coordinator.platforms
+                hass.config_entries.async_unload_platforms(entry, PLATFORMS)
             ]
         )
     )

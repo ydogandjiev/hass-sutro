@@ -17,9 +17,11 @@ This component integrates Home Assistant with Sutro (https://mysutro.com/), a de
 
 **This component will set up the following platforms.**
 
-| Platform | Description                   |
-| -------- | ----------------------------- |
-| `sensor` | Show measurements from Sutro. |
+| Platform        | Description                      |
+| --------------- | -------------------------------- |
+| `sensor`        | Show measurements from Sutro.    |
+| `binary_sensor` | Show device state from Sutro.    |
+| `todo`          | Show recommendations from Sutro. |
 
 ![example][exampleimg]
 
@@ -39,10 +41,12 @@ Using your HA configuration directory (folder) as a starting point you should no
 custom_components/sutro/translations/en.json
 custom_components/sutro/__init__.py
 custom_components/sutro/api.py
+custom_components/sutro/binary_sensor.py
 custom_components/sutro/config_flow.py
 custom_components/sutro/const.py
 custom_components/sutro/manifest.json
 custom_components/sutro/sensor.py
+custom_components/sutro/todo.py
 ```
 
 ## Configuration is done in the UI
