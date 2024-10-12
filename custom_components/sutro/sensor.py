@@ -26,7 +26,7 @@ from .entity import SutroEntity
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    """Set up the Sutro sensors."""
+    """Set up the sensors for the Sutro integration."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_entities(
         [

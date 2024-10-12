@@ -6,6 +6,10 @@ __pycache__
 */dist/*
 
 
+# Mac
+.DS_Store
+
+
 # misc
 .coverage
 .vscode

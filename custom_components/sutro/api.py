@@ -5,6 +5,8 @@ import asyncio
 import json
 import logging
 import socket
+from datetime import datetime
+from datetime import timezone
 from typing import Any
 
 import aiohttp
@@ -143,6 +145,27 @@ class SutroDataApiClient(SutroApiClient):
                     lastMessage
                 }
                 pool {
+                    latestRecommendations {
+                        conflictWarning
+                        recommendations {
+                            id
+                            chemical {
+                                behaviour
+                                image
+                                name
+                                types
+                                packageSize
+                                packageSizeUnit
+                                upc
+                            }
+                            completedAt
+                            expiredAt
+                            type
+                            decision
+                            explanation
+                            treatment
+                        }
+                    }
                     latestReading {
                         alkalinity
                         bromine
@@ -161,6 +184,68 @@ class SutroDataApiClient(SutroApiClient):
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self._token}",
         }
+        response = await self.api_wrapper(
+            "post", SUTRO_GRAPHSQL_URL, json.dumps(payload), headers
+        )
+        if response:
+            return response["data"]
+        return None
+
+    async def async_complete_recommendation(self, recommendation_id) -> dict | None:
+        """Complete a recommendation."""
+        query = """
+        mutation ($recommendationId: ID!, $completedAt: DateTime) {
+            completeRecommendation(recommendationId: $recommendationId, completedAt: $completedAt) {
+                completedAt
+                success
+            }
+        }
+        """
+        current_time = datetime.now(timezone.utc).isoformat()
+
+        payload = {
+            "query": query,
+            "variables": {
+                "recommendationId": recommendation_id,
+                "completedAt": current_time,
+            },
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self._token}",
+        }
+        response = await self.api_wrapper(
+            "post", SUTRO_GRAPHSQL_URL, json.dumps(payload), headers
+        )
+        if response:
+            return response["data"]
+        return None
+
+    async def async_uncomplete_recommendation(self, recommendation_id) -> dict | None:
+        """Uncomplete a recommendation."""
+        query = """
+        mutation ($recommendationId: ID!, $completedAt: DateTime) {
+            completeRecommendation(recommendationId: $recommendationId, completedAt: $completedAt) {
+                completedAt
+                success
+            }
+        }
+        """
+        payload = {
+            "query": query,
+            "variables": {
+                "recommendationId": recommendation_id,
+                "completedAt": None,
+            },
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {self._token}",
+        }
+
+        _LOGGER.info("Uncompleting recommendation %s", recommendation_id)
+        _LOGGER.info("Payload: %s", payload)
+
         response = await self.api_wrapper(
             "post", SUTRO_GRAPHSQL_URL, json.dumps(payload), headers
         )
