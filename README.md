@@ -26,16 +26,20 @@ This component integrates Home Assistant with Sutro (https://mysutro.com/), a de
 ![example][exampleimg]
 
 ## Installation
+
 You can install the Sutro integration in one of two ways - using HACS or by manually copying the files into the custom_integrations folder of your Home Assistant. The HACS option is significantly quicker and allows for easy updating in the future.
 
 ## Using HACS
+
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ydogandjiev&repository=hass-sutro&category=integration)
+
 1. Click the link above to open the Sutro integration in HACS or just search for it by name in the HACS UI and click on it
 2. Click on the "Download" button
 3. Restart Home Assistant
 4. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Sutro"
 
 ## Manual
+
 1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
 2. If you do not have a `custom_components` directory (folder) there, you need to create it.
 3. In the `custom_components` directory (folder) create a new folder called `sutro`.

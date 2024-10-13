@@ -6,7 +6,6 @@ logger:
   default: info
   logs:
     custom_components.integration_blueprint: debug
-
 # Enable VSCode debugging
 # debugpy:
 #   start: true
