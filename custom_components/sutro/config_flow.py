@@ -3,18 +3,14 @@ from __future__ import annotations
 
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.config_entries import OptionsFlow
 from homeassistant.const import CONF_EMAIL
 from homeassistant.const import CONF_PASSWORD
 from homeassistant.const import CONF_TOKEN
-from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 
 from .api import SutroLoginApiClient
 from .const import DOMAIN
-from .const import PLATFORMS
 
 
 class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
@@ -54,12 +50,6 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         return await self._show_config_form(user_input)
 
-    @staticmethod
-    @callback
-    def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
-        """Get options flow for configuring Sutro."""
-        return SutroOptionsFlowHandler(config_entry)
-
     async def _show_config_form(self, user_input):  # pylint: disable=unused-argument
         """Show the configuration form to edit location data."""
         return self.async_show_form(
@@ -82,40 +72,3 @@ class SutroFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         except Exception as ex:
             self.hass.components.logger.error(f"Failed to get login data: {ex}")
         return None
-
-
-class SutroOptionsFlowHandler(config_entries.OptionsFlow):
-    """Config flow options handler for sutro."""
-
-    def __init__(self, config_entry):
-        """Initialize HACS options flow."""
-        self.config_entry = config_entry
-        self.options = dict(config_entry.options)
-
-    async def async_step_init(
-        self, user_input=None
-    ) -> FlowResult:  # pylint: disable=unused-argument
-        """Manage the options."""
-        return await self.async_step_user()
-
-    async def async_step_user(self, user_input=None) -> FlowResult:
-        """Handle a flow initialized by the user."""
-        if user_input is not None:
-            self.options.update(user_input)
-            return await self._update_options()
-
-        return self.async_show_form(
-            step_id="user",
-            data_schema=vol.Schema(
-                {
-                    vol.Required(x, default=self.options.get(x, True)): bool
-                    for x in sorted(PLATFORMS)
-                }
-            ),
-        )
-
-    async def _update_options(self):
-        """Update config entry options."""
-        return self.async_create_entry(
-            title=self.config_entry.data.get(CONF_TOKEN), data=self.options
-        )

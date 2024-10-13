@@ -8,7 +8,6 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN
-from .const import NAME
 from .entity import SutroEntity
 
 
@@ -32,7 +31,7 @@ class RecommendationsList(SutroEntity, TodoListEntity):
     def __init__(self, coordinator, entry) -> None:
         """Initialize RecommendationsList."""
         super().__init__(coordinator=coordinator, config_entry=entry)
-        self._attr_name = f"{NAME} Recommendations"
+        self._attr_name = "Recommendations"
 
     @property
     def unique_id(self):
