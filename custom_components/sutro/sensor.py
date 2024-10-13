@@ -91,7 +91,8 @@ class AciditySensor(SutroDeviceReadingSensor):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
-        return float(self.coordinator.data["me"]["pool"]["latestReading"]["ph"])
+        val = self.coordinator.data["me"]["pool"]["latestReading"]["ph"]
+        return val and float(val)
 
     @property
     def unique_id(self):
@@ -109,7 +110,8 @@ class AlkalinitySensor(SutroDeviceReadingSensor):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
-        return float(self.coordinator.data["me"]["pool"]["latestReading"]["alkalinity"])
+        val = self.coordinator.data["me"]["pool"]["latestReading"]["alkalinity"]
+        return val and float(val)
 
     @property
     def unique_id(self):
@@ -128,9 +130,7 @@ class FreeChlorineSensor(SutroDeviceReadingSensor):
     def native_value(self):
         """Return the native value of the sensor."""
         val = self.coordinator.data["me"]["pool"]["latestReading"]["chlorine"]
-        if val is None:
-            return 0
-        return float(val)
+        return val and float(val)
 
     @property
     def unique_id(self):
@@ -149,9 +149,7 @@ class BromineSensor(SutroDeviceReadingSensor):
     def native_value(self):
         """Return the native value of the sensor."""
         val = self.coordinator.data["me"]["pool"]["latestReading"]["bromine"]
-        if val is None:
-            return 0
-        return float(val)
+        return val and float(val)
 
     @property
     def unique_id(self):
@@ -169,7 +167,8 @@ class TemperatureSensor(SutroDeviceSensor):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
-        return float(self.coordinator.data["me"]["device"]["temperature"])
+        val = self.coordinator.data["me"]["device"]["temperature"]
+        return val and float(val)
 
     @property
     def unique_id(self):
@@ -187,7 +186,8 @@ class BatterySensor(SutroDeviceSensor):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
-        return float(self.coordinator.data["me"]["device"]["batteryLevel"])
+        val = self.coordinator.data["me"]["device"]["batteryLevel"]
+        return val and float(val)
 
     @property
     def unique_id(self):
@@ -205,7 +205,8 @@ class CartridgeCharges(SutroDeviceSensor):
     @property
     def native_value(self):
         """Return the native value of the sensor."""
-        return int(self.coordinator.data["me"]["device"]["cartridgeCharges"])
+        val = self.coordinator.data["me"]["device"]["cartridgeCharges"]
+        return val and int(val)
 
     @property
     def unique_id(self):
