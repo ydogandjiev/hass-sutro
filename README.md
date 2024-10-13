@@ -27,6 +27,19 @@ This component integrates Home Assistant with Sutro (https://mysutro.com/), a de
 
 ## Installation
 
+You can install the Sutro integration in one of two ways - using HACS or by manually copying the files into the custom_integrations folder of your Home Assistant. The HACS option is significantly quicker and allows for easy updating in the future.
+
+## Using HACS
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ydogandjiev&repository=hass-sutro&category=integration)
+
+1. Click the link above to open the Sutro integration in HACS or just search for it by name in the HACS UI and click on it
+2. Click on the "Download" button
+3. Restart Home Assistant
+4. In the HA UI go to "Configuration" -> "Integrations" click "+" and search for "Sutro"
+
+## Manual
+
 1. Using the tool of choice open the directory (folder) for your HA configuration (where you find `configuration.yaml`).
 2. If you do not have a `custom_components` directory (folder) there, you need to create it.
 3. In the `custom_components` directory (folder) create a new folder called `sutro`.
@@ -44,6 +57,7 @@ custom_components/sutro/api.py
 custom_components/sutro/binary_sensor.py
 custom_components/sutro/config_flow.py
 custom_components/sutro/const.py
+custom_components/sutro/entity.py
 custom_components/sutro/manifest.json
 custom_components/sutro/sensor.py
 custom_components/sutro/todo.py
@@ -51,10 +65,8 @@ custom_components/sutro/todo.py
 
 ## Configuration is done in the UI
 
-The only configuration parameter required is the Sutro API token. This can be discovered by observing the network calls made by the Sutro App. An easy option is to use Charles:
-https://www.charlesproxy.com/documentation/faqs/using-charles-from-an-iphone/
-
-And then look for the calls to https://api.mysutro.com/graphql. The token will be in the Authorization header of the outgoing requests.
+To configure the integration, you need to provide the e-mail and password for your Sutro account:
+![login][loginimg]
 
 ## Contributions are welcome!
 
@@ -80,6 +92,7 @@ Code template was mainly taken from [@Ludeeus](https://github.com/ludeeus)'s [in
 [discord]: https://discord.gg/Qa5fW2R
 [discord-shield]: https://img.shields.io/discord/330944238910963714.svg?style=for-the-badge
 [exampleimg]: example.png
+[loginimg]: login.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg?style=for-the-badge
 [forum]: https://community.home-assistant.io/
 [license-shield]: https://img.shields.io/github/license/ydogandjiev/hass-sutro.svg?style=for-the-badge
