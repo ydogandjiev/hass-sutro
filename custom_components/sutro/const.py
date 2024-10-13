@@ -5,7 +5,7 @@ from homeassistant.const import Platform
 NAME = "Sutro"
 DOMAIN = "sutro"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "0.0.1"
+VERSION = "1.0.0"
 
 ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
 ISSUE_URL = "https://github.com/ydogandjiev/hass-sutro/issues"
